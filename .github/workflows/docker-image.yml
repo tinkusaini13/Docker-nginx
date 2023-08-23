@@ -22,5 +22,5 @@ jobs:
 
       - name: Build and Push
         run: |
-          docker build -t nginx-web .
-          docker push sainiji/website:v1
+          docker build -t nginx-web:v1 .
+          docker push nginx-web:v1
