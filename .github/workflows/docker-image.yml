@@ -23,6 +23,6 @@ jobs:
    
       - name: Build and Push
         run: |
-          docker login -u $DOCKER_USERNAME  -p $DOCKER_PASSWORD
+          
           docker build -t nginx-web .
-          docker push sainiji/website:v1
+          docker push sainiji/website
