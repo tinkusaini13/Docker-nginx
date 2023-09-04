@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Change this to your main branch name
+      - nginx  # Change this to your main branch name
 
 jobs:
   build-and-push:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t website  .
-          docker tag wevsite:v1  sre2024/website/website:v1
-          docker push sre2024/website/website:v1
+          docker build -t web  .
+          docker tag wevsite:v1  sainiji/web/web:v1
+          docker push sainiji/web/web:v1
 
