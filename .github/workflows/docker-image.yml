@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t web  .
-          docker tag wevsite:v1  sainiji/web/web:v1
-          docker push sainiji/web/web:v1
+          docker build -t website  .
+          docker tag website sainiji/web:v1
+          docker push sainiji/web:v1
 
