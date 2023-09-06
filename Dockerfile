@@ -10,4 +10,5 @@ RUN apt-get update && \
 COPY ./web/ /var/www/html/
 EXPOSE 443 80
 ADD start.sh /
+RUN chmod +x /start.sh
 ENTRYPOINT ["/bin/bash", "/start.sh"]
