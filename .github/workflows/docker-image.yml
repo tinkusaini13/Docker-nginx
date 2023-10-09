@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Change this to your main branch name
+      - main  # Change this to your main branch 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
