@@ -26,7 +26,7 @@ jobs:
         run: docker images
 
       - name: Tag for Docker Image
-        run: docker tag  sainiji/web:v1
+        run: docker tag web:v1 sainiji/web:v1
         
       - name: Push Docker Image
         run: docker push sainiji/web:v1
