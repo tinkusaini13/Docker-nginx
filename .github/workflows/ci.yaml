@@ -24,3 +24,9 @@ jobs:
 
       - name: list images
         run: docker images
+
+      - name: Tag for Docker Image
+        run: docker tag  sainiji/web:v1
+        
+      - name: Push Docker Image
+        run: docker push sainiji/web:v1
