@@ -21,9 +21,9 @@ jobs:
 
       - name: Build Docker Image
         run: docker build -t $DOCKER_USERNAME/web:v1 .
-        
+
       - name: Tag for Docker Image
-        run: docker tag web:v1 sainiji/web:v1
+        run: docker tag $DOCKER_USERNAME/web:v1 sainiji/web:v1
         
       - name: Push Docker Image
-        run: docker push $DOCKER_USERNAME/web:v1 
+        run: docker push $DOCKER_USERNAME/web:v1
