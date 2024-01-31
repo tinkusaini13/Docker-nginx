@@ -9,48 +9,48 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      
-      -  name: Checkout
-         uses: actions/checkout@v3
-      
-      -  name: Set up QEMU
-         uses: docker/setup-qemu-action@v3
-      
-      -  name: Set up Docker Buildx
-         uses: docker/setup-buildx-action@v3
-      
-      -  name: Login to Docker Hub
-         uses: docker/login-action@v3
-         with:
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_TOKEN }}
-      
-      -  name: Build and push
-         uses: docker/build-push-action@v5
-         with:
-           context: .
-           push: true
-           tags: sainiji/web:blue
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: sainiji/web:blue
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'sainiji/web:blue'
-          #format: 'table'
           scan-type: image
-          format: sarif
-          output: trivy-report.sarif
-          exit-code: 1 # Fail if any error
+          format: table # Choose the desired format (table or sarif)
+          exit-code: 1
           ignore-unfixed: true
           vuln-type: os,library
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           timeout: 15m
           scanners: vuln
 
+      - name: Save Trivy report to file
+        run: echo "${{ steps.trivy.outputs.results }}" > trivy_report.txt
+
       - name: Upload Trivy result to GHAS
         if: (success() || failure()) && (github.event_name == 'pull_request' || github.event_name == 'push')
         uses: github/codeql-action/upload-sarif@v2
         with:
-           token: ${{ secrets.GIT_TOKEN }}
-           sarif_file: trivy-report.sarif
-           category: trivy     
+          token: ${{ secrets.GIT_TOKEN }}
+          sarif_file: trivy_report.txt
+          category: trivy
