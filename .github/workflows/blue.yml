@@ -36,12 +36,12 @@ jobs:
         with:
           image-ref: 'sainiji/web:blue'
           scan-type: image
-          format: table # Choose the desired format (table or sarif)
+          format: sarif # Choose the desired format (table or sarif)
           exit-code: 1
           ignore-unfixed: true
           vuln-type: os,library
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          timeout: 15m
+          timeout: 5m
           scanners: vuln
 
       - name: Save Trivy report to file
