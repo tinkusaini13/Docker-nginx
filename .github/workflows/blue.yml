@@ -35,4 +35,4 @@ jobs:
       - name: Scan Docker Image with Trivy
         run: |
           docker pull  sainiji/web:blue  
-          docker run --rm -v $(pwd):/workdir aquasec/sainiji/web:blue
+          docker run --rm -v $(pwd):/workdir aquasec/trivy  sainiji/web:blue
