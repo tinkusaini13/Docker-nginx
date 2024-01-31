@@ -31,8 +31,13 @@ jobs:
            context: .
            push: true
            tags: sainiji/web:blue
-      
-      - name: Scan Docker Image with Trivy
-        run: |
-          docker pull  sainiji/web:blue  
-          docker run --rm -v $(pwd):/workdir aquasec/trivy  sainiji/web:blue
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'sainiji/web:blue'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
