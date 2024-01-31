@@ -41,3 +41,14 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Save Trivy report to file
+        run: echo "${{ steps.trivy_scan.outputs.results }}" > trivy_report.txt
+
+      - name: Commit Trivy report
+        run: |
+             git config user.email "sainiji@gmail.com"
+             git config user.name "tinkusaini13"
+             git add trivy_report.txt
+             git commit -m "Add Trivy scan report"
+             git push
