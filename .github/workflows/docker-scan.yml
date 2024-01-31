@@ -1,0 +1,29 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - blue
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -t sainiji/web:blue .
+          echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          docker push sainiji/web:blue
+
+      - name: Scan Docker Image with Trivy
+        run: |
+          docker pull sainiji/web:blue
+          docker run --rm -v $(pwd):/workdir aquasec/trivy sainiji/web:blue
