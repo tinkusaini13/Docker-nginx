@@ -51,6 +51,6 @@ jobs:
         if: (success() || failure()) && (github.event_name == 'pull_request' || github.event_name == 'push')
         uses: github/codeql-action/upload-sarif@v2
         with:
-           token: ${{ secrets.GITHUB_TOKEN }}
+           token: ${{ secrets.GIT_TOKEN }}
            sarif_file: trivy-report.sarif
            category: trivy     
